@@ -1,0 +1,5 @@
+.idea/
+__pycache__/config.cpython-314.pyc
+venv
+
+Dataset/Similarity_Matrix.pkl
