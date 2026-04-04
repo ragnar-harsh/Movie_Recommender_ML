@@ -5,7 +5,7 @@ import requests
 from config import TMDB_API_KEY, TMDB_API_URL, TMDB_POSTER_URL
 
 # Data Imports
-movies_dict = pickle.load(open('Dataset\Movies_Dict.pkl', 'rb'))
+movies_dict = pickle.load(open('Dataset/Movies_Dict.pkl', 'rb'))
 movies_list = pd.DataFrame(movies_dict)
 
 similarity_matrix = pickle.load(open('Dataset/Similarity_Matrix.pkl', 'rb'))
