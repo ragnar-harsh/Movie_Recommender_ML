@@ -24,15 +24,17 @@ def fetch_movie_details(movie_ID):
             "poster": f"{TMDB_POSTER_URL}{data.get('poster_path')}" if data.get('poster_path') else None,
             "overview": data.get("overview", "No overview available"),
             "release_date": data.get("release_date", "N/A"),
-            "genres": [g["name"] for g in data.get("genres", [])]
+            "genres": [g["name"] for g in data.get("genres", [])],
+            "rating": round(data.get("vote_average", 0), 1),
         }
 
-    except:
+    except Exception as e:
         return {
             "poster": None,
-            "overview": "Error fetching data",
+            "overview": str(e) or "Error fetching data",
             "release_date": "N/A",
-            "genres": []
+            "genres": [],
+            "rating": "N/A"
         }
 
 
@@ -57,7 +59,8 @@ def Recommend_Movie(selected_movie, count):
             "poster": details["poster"],
             "overview": details["overview"],
             "release_date": details["release_date"],
-            "genres": details["genres"]
+            "genres": details["genres"],
+            "rating": details["rating"]
         })
 
     return recommendations
@@ -130,8 +133,15 @@ if st.button('Recommend'):
                     # Title
                     st.markdown(f"### 🎬 {movie['title']}")
 
-                    # Release Date
-                    st.caption(f"📅 {movie['release_date']}")
+                    # # Release Date
+                    # st.caption(f"📅 {movie['release_date']}")
+                    col1, col2 = st.columns(2)
+
+                    with col1:
+                        st.caption(f"📅 {movie['release_date']}")
+
+                    with col2:
+                        st.caption(f"⭐ {movie.get('rating', "N/A")}")
 
                     # Genres
                     if movie["genres"]:
